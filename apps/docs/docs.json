@@ -7,6 +7,9 @@
     "light": "#0789ca",
     "dark": "#154c7f"
   },
+  "fonts": {
+    "family": "Nunito"
+  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
