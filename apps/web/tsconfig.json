@@ -17,9 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@ui8kit/core": ["../../packages/@ui8kit/core/src"],
-      "@ui8kit/core/*": ["../../packages/@ui8kit/core/src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"],

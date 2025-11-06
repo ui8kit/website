@@ -12,8 +12,7 @@ export default defineConfig(({ mode }) => {
       preserveSymlinks: true,
       dedupe: ['react', 'react-dom'],
       alias: {
-        '@': path.resolve(__dirname, './src'),
-        '@ui8kit/core': path.resolve(__dirname, '../../packages/@ui8kit/core/src')
+        '@': path.resolve(__dirname, './src')
       }
     },
     server: { port: 5000 }
