@@ -1,0 +1,604 @@
+---
+title: 'UI Components API'
+description: 'Complete API reference for UI8Kit composite components including Button, Card, Badge, Accordion, and layout elements with typed variant props'
+---
+
+# UI Components
+
+UI8Kit provides a comprehensive set of composite components that extend base primitives with typed variant props. These components eliminate manual className management while providing full customization through a consistent API.
+
+## Quick Start
+
+Get started with UI components by importing them from the core package:
+
+```javascript
+import { Button, Card, Badge, Accordion } from '@ui8kit/core';
+```
+
+<Note>
+All UI components support universal props like `p`, `m`, `rounded`, and `shadow` through the variant system. See [Universal Props](#universal-props-reference) for the complete list.
+</Note>
+
+## Component Overview
+
+UI components are organized into two categories:
+
+**Layout Components** - Structural elements for page composition
+**UI Components** - Interactive elements and content containers
+
+Each component provides a developer-friendly API that forwards variant props to underlying primitives while adding component-specific functionality.
+
+## Component Architecture
+
+UI components form the middle layer of UI8Kit's three-layer architecture:
+
+- **Foundation Layer**: CVA variant functions that generate Tailwind classes
+- **Primitive Layer**: Base HTML elements with minimal styling
+- **Component Layer**: Composite components with typed variant props
+
+### Prop Forwarding Pattern
+
+UI components extend primitives through prop forwarding. Each component:
+
+1. Imports variant functions from `@ui8kit/core`
+2. Accepts typed variant props in its interface
+3. Applies variants using the `cn()` utility
+4. Forwards remaining props to the base primitive
+
+<Info>
+This pattern provides type safety while eliminating manual className management. Components like `Badge` and `Button` inherit spacing, color, and visual variants from the foundation layer.
+</Info>
+
+### Badge Component Example
+
+The `Badge` component demonstrates prop forwarding in action:
+
+```12:18:src/components/ui/Badge/Badge.tsx
+import { Badge as BaseBadge } from "@ui8kit/core/ui";
+import {
+  spacingVariants,
+  roundedVariants,
+  shadowVariants,
+  borderVariants,
+  badgeSizeVariants,
+  badgeStyleVariants,
+} from "@ui8kit/core/variants";
+```
+
+```20:32:src/components/ui/Badge/Badge.tsx
+export interface BadgeProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    Pick<VariantSpacingProps, "m" | "mx" | "my">,
+    RoundedProps,
+    ShadowProps,
+    BorderProps,
+    BadgeSizeProps,
+    BadgeStyleProps {
+  // Component-specific props
+}
+```
+
+```56:73:src/components/ui/Badge/Badge.tsx
+const Badge = forwardRef<HTMLDivElement, BadgeProps>(
+  ({ children, className, variant = "default", ...props }, ref) => {
+    const {
+      m,
+      mx,
+      my,
+      rounded,
+      shadow,
+      border,
+      size,
+      // ... other variant props
+      ...htmlProps
+    } = props;
+
+    return (
+      <BaseBadge
+        ref={ref}
+        data-class="badge"
+        className={cn(
+          // Base classes
+          "inline-flex items-center font-medium transition-colors",
+          // Focus styles
+          "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+          // Variant functions
+          spacingVariants({ m, mx, my }),
+          roundedVariants({ rounded }),
+          shadowVariants({ shadow }),
+          borderVariants({ border }),
+          badgeSizeVariants({ size }),
+          badgeStyleVariants({ variant }),
+          // Custom className
+          className
+        )}
+        {...htmlProps}
+      >
+        {children}
+      </BaseBadge>
+    );
+  }
+);
+```
+
+## Variant System
+
+UI components access 12 variant categories from the foundation layer. Each component selectively imports only the variants it needs:
+
+| Variant Category | Props | Values | Common Components |
+|------------------|-------|--------|-------------------|
+| **Spacing** | `p`, `px`, `py`, `pt`, `pb`, `pl`, `pr`, `m`, `mx`, `my`, `mt`, `mb`, `ml`, `mr` | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `auto` | All components |
+| **Rounded** | `rounded` | `none`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `full` | Card, Badge, Button, Image |
+| **Shadow** | `shadow` | `none`, `sm`, `md`, `lg`, `xl`, `2xl` | Card, Badge, Image |
+| **Border** | `border`, `borderTop`, `borderBottom`, `borderLeft`, `borderRight` | `none`, `default`, `border` | Card, Badge |
+| **Colors** | `bg`, `c`, `borderColor` | Design system colors | Card, Badge, Title, Text |
+| **Layout** | `w`, `h`, `minH`, `maxW`, `position` | `auto`, `full`, `screen`, `fit`, `min`, `max` | Accordion, Container, Stack |
+| **Typography** | `size`, `weight`, `align`, `leading` | Font properties | Title, Text |
+| **Badge Style** | `variant` | `default`, `secondary`, `destructive`, `outline`, `success`, `warning` | Badge |
+| **Button Style** | `variant`, `size`, `contentAlign` | Button-specific variants | Button |
+| **Flexbox** | `gap`, `direction`, `align`, `justify` | Flex properties | Group, Stack, AccordionItem |
+| **Grid** | `cols`, `gap` | Grid properties | Grid, GridCol |
+| **Effects** | Various visual effects | Component-specific | Multiple |
+
+### How Variants Work
+
+When you use variant props, UI8Kit automatically converts them to Tailwind classes:
+
+```jsx
+<Badge
+  p="lg"
+  rounded="xl"
+  shadow="md"
+  variant="success"
+/>
+```
+
+This generates the final className: `"inline-flex items-center font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring p-8 rounded-xl shadow-md bg-green-500 text-green-50 ..."`
+
+<Tip>
+You never need to write Tailwind classes manually. Just use typed variant props and let UI8Kit handle the rest.
+</Tip>
+
+## Data Attributes
+
+Each UI component includes stable `data-class` attributes for reliable targeting:
+
+```jsx
+// Generated markup
+<div data-class="badge" class="...">
+  <div data-class="badge-left-section">...</div>
+  <div data-class="badge-dot"></div>
+  <div data-class="badge-right-section">...</div>
+</div>
+```
+
+<Info>
+Use `data-class` attributes for CSS selectors, testing, and DOM queries. These remain stable even when component styles change.
+</Info>
+
+## TypeScript Support
+
+All UI components provide full TypeScript support with:
+
+- **Typed variant props** with autocomplete
+- **HTML attribute forwarding** for standard DOM props
+- **Ref forwarding** for direct DOM access
+- **Compound component patterns** for complex UI structures
+
+```tsx
+// Full type safety with autocomplete
+<Badge
+  variant="success"    // ✓ Autocomplete for valid values
+  size="sm"           // ✓ Type-checked
+  rounded="full"      // ✓ Valid variant
+  m="xs"             // ✓ Spacing variant
+  onClick={handler}   // ✓ Standard HTML props
+  ref={badgeRef}      // ✓ Ref forwarding
+>
+  Active
+</Badge>
+```
+
+
+## Layout Components
+
+### Block
+
+Section wrapper component with full styling control. Perfect for content sections and custom layouts.
+
+<ParamField body="component" type="string" default="div">
+HTML element to render as the container
+</ParamField>
+
+```jsx
+<Block p="lg" bg="muted" rounded="md">
+  <Title>Content Section</Title>
+  <Text>Section content here...</Text>
+</Block>
+```
+
+### Container
+
+Responsive container with size presets and centering options.
+
+<ParamField body="size" type="string" default="md">
+Container width preset
+</ParamField>
+
+<ParamField body="centered" type="boolean">
+Center the container horizontally
+</ParamField>
+
+```jsx
+<Container size="lg" centered>
+  <Card p="xl">
+    <Title>Centered Content</Title>
+  </Card>
+</Container>
+```
+
+### Stack
+
+Vertical flex layout for stacking elements with consistent spacing.
+
+<ParamField body="gap" type="string">
+Spacing between child elements
+</ParamField>
+
+<ParamField body="align" type="string">
+Vertical alignment of children
+</ParamField>
+
+```jsx
+<Stack gap="md">
+  <Badge variant="success">Status</Badge>
+  <Title>Section Title</Title>
+  <Text>Content here...</Text>
+</Stack>
+```
+
+### Group
+
+Horizontal flex layout for arranging elements in a row.
+
+<ParamField body="gap" type="string">
+Spacing between child elements
+</ParamField>
+
+<ParamField body="justify" type="string" default="start">
+Horizontal distribution of children
+</ParamField>
+
+```jsx
+<Group gap="sm" justify="between">
+  <Title>Page Title</Title>
+  <Button variant="outline">Action</Button>
+</Group>
+```
+
+### Grid
+
+CSS Grid layout with responsive column presets.
+
+<ParamField body="cols" type="string" default="1">
+Responsive column configuration
+</ParamField>
+
+<ParamField body="gap" type="string">
+Spacing between grid items
+</ParamField>
+
+```jsx
+<Grid cols="1-2-3" gap="lg">
+  <Card><Title>Item 1</Title></Card>
+  <Card><Title>Item 2</Title></Card>
+  <Card><Title>Item 3</Title></Card>
+</Grid>
+```
+
+### Card
+
+Card component with compound structure for headers, content, and footers.
+
+**Compound Components:**
+- `Card`: Root container
+- `CardHeader`: Top section
+- `CardTitle`: Heading
+- `CardDescription`: Subtitle
+- `CardContent`: Main content area
+- `CardFooter`: Bottom section
+
+```jsx
+<Card p="lg" shadow="md" rounded="xl">
+  <CardHeader>
+    <CardTitle>Card Title</CardTitle>
+    <CardDescription>Card description text</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <Text>Main content goes here</Text>
+  </CardContent>
+  <CardFooter>
+    <Button variant="outline">Action</Button>
+  </CardFooter>
+</Card>
+```
+
+### Button
+
+Interactive button with variants, sizes, and loading states.
+
+<ParamField body="variant" type="string" default="default">
+Button style variant
+</ParamField>
+
+<ParamField body="size" type="string" default="default">
+Button size preset
+</ParamField>
+
+<ParamField body="leftSection" type="ReactNode">
+Content to display on the left side
+</ParamField>
+
+<ParamField body="rightSection" type="ReactNode">
+Content to display on the right side
+</ParamField>
+
+<ParamField body="loading" type="boolean">
+Show loading state
+</ParamField>
+
+```jsx
+<Button variant="default" size="lg" leftSection={<Icon />}>
+  Click me
+</Button>
+```
+
+### Badge
+
+Small status indicators with dots and sections.
+
+<ParamField body="variant" type="string" default="default">
+Badge style variant
+</ParamField>
+
+<ParamField body="size" type="string" default="default">
+Badge size preset
+</ParamField>
+
+<ParamField body="dot" type="boolean">
+Show status indicator dot
+</ParamField>
+
+<ParamField body="leftSection" type="ReactNode">
+Content before the badge text
+</ParamField>
+
+<ParamField body="rightSection" type="ReactNode">
+Content after the badge text
+</ParamField>
+
+```jsx
+<Badge variant="success" size="sm" dot>
+  Active
+</Badge>
+```
+
+#### Title
+
+Semantic heading elements with typography control.
+
+**Key Props:**
+
+- `order`: `1` | `2` | `3` | `4` | `5` | `6` (maps to `h1`-`h6`)
+
+- `size`: Font size variant
+
+- `fw`: Font weight
+
+- `c`: Text color
+
+- Supports spacing variants
+
+**Location:** [src/components/ui/Title/](https://github.com/ui8kit/core/blob/2afe2195/src/components/ui/Title/) (referenced in [src/components/README.md150-163](https://github.com/ui8kit/core/blob/2afe2195/src/components/README.md#L150-L163))
+
+#### Text
+
+Text elements with full typography control.
+
+**Key Props:**
+
+- `size`: Font size variant
+
+- `c`: Text color
+
+- `ta`: Text alignment (`'left'` | `'center'` | `'right'` | `'justify'`)
+
+- `truncate`: Boolean for text truncation
+
+- Supports spacing variants
+
+**Location:** [src/components/ui/Text/](https://github.com/ui8kit/core/blob/2afe2195/src/components/ui/Text/) (referenced in [src/components/README.md165-177](https://github.com/ui8kit/core/blob/2afe2195/src/components/README.md#L165-L177))
+
+#### Image
+
+Enhanced image component with aspect ratio and fit control.
+
+**Key Props:**
+
+- `src`, `alt`: Standard image attributes
+
+- `aspect`: `'square'` | `'video'` | `'portrait'` | `'landscape'`
+
+- `fit`: `'contain'` | `'cover'` | `'fill'` | `'none'`
+
+- Supports rounded and shadow variants
+
+**Location:** [src/components/ui/Image/](https://github.com/ui8kit/core/blob/2afe2195/src/components/ui/Image/) (referenced in [src/components/README.md179-191](https://github.com/ui8kit/core/blob/2afe2195/src/components/README.md#L179-L191))
+
+#### Icon
+
+Icon wrapper for lucide-react icons with size and color control.
+
+**Key Props:**
+
+- `lucideIcon`: Lucide icon component
+
+- `size`: Size variant
+
+- `c`: Color variant
+
+- Supports spacing variants
+
+**Location:** [src/components/ui/Icon/](https://github.com/ui8kit/core/blob/2afe2195/src/components/ui/Icon/) (referenced in [src/components/README.md193-203](https://github.com/ui8kit/core/blob/2afe2195/src/components/README.md#L193-L203))
+
+#### Accordion
+
+Expandable/collapsible sections with state management.
+
+**Structure:**
+
+- `Accordion`: Root with controlled/uncontrolled state
+
+- `AccordionItem`: Individual collapsible section
+
+- `AccordionTrigger`: Clickable header (uses `Button`)
+
+- `AccordionContent`: Collapsible content area
+
+**Key Props (Accordion):**
+
+- `type`: `'single'` | `'multiple'`
+
+- `collapsible`: Boolean for closing active item
+
+- `value`, `onValueChange`, `defaultValue`: State control
+
+- `w`: Width variant
+
+**Key Props (AccordionItem):**
+
+- `value`: Unique identifier (required)
+
+- `w`: Width variant
+
+- `gap`, `direction`: Flex variants
+
+**Key Props (AccordionTrigger):**
+
+- Extends all `ButtonProps`
+
+- `w`: Width variant (defaults to `'full'`)
+
+**Key Props (AccordionContent):**
+
+- `w`: Width variant
+
+- Automatic animation via CSS transitions
+
+**Implementation:** [src/components/ui/Accordion/Accordion.tsx1-184](https://github.com/ui8kit/core/blob/2afe2195/src/components/ui/Accordion/Accordion.tsx#L1-L184)
+
+**Sources:** [src/components/README.md94-203](https://github.com/ui8kit/core/blob/2afe2195/src/components/README.md#L94-L203) [src/components/ui/Badge/Badge.tsx1-97](https://github.com/ui8kit/core/blob/2afe2195/src/components/ui/Badge/Badge.tsx#L1-L97) [src/components/ui/Accordion/Accordion.tsx1-184](https://github.com/ui8kit/core/blob/2afe2195/src/components/ui/Accordion/Accordion.tsx#L1-L184)
+
+## Universal Props
+
+All UI components support these universal props through the variant system:
+
+### Spacing Props
+
+| Prop | Description | Values |
+|------|-------------|--------|
+| `p` | Padding (all sides) | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |
+| `px`, `py` | Padding horizontal/vertical | Same as `p` |
+| `pt`, `pb`, `pl`, `pr` | Padding individual sides | Same as `p` |
+| `m` | Margin (all sides) | `none`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl`, `auto` |
+| `mx`, `my` | Margin horizontal/vertical | Same as `m` |
+| `mt`, `mb`, `ml`, `mr` | Margin individual sides | Same as `m` |
+
+### Visual Props
+
+| Prop | Description | Values |
+|------|-------------|--------|
+| `rounded` | Border radius | `none`, `sm`, `md`, `lg`, `xl`, `2xl`, `3xl`, `full` |
+| `shadow` | Box shadow | `none`, `sm`, `md`, `lg`, `xl`, `2xl` |
+| `bg` | Background color | Design system colors |
+| `c` | Text color | Design system colors |
+| `border` | Border styles | `none`, `default`, `border` |
+
+### Layout Props
+
+| Prop | Description | Values |
+|------|-------------|--------|
+| `w` | Width | `auto`, `full`, `screen`, `fit`, `min`, `max` |
+| `h` | Height | Same as `w` |
+| `minH`, `maxW` | Min/max dimensions | Same as `w` |
+| `position` | CSS position | `static`, `relative`, `absolute`, `fixed`, `sticky` |
+
+## Usage Examples
+
+### Basic Components
+
+```jsx
+import { Badge, Button, Card } from '@ui8kit/core';
+
+// Simple badge with variants
+<Badge variant="success" size="sm" dot>
+  Active
+</Badge>
+
+// Button with sections
+<Button variant="default" leftSection={<Icon />}>
+  Click me
+</Button>
+```
+
+### Compound Components
+
+```jsx
+import { Card, CardHeader, CardTitle, CardContent } from '@ui8kit/core';
+
+<Card p="lg" rounded="xl" shadow="md">
+  <CardHeader>
+    <CardTitle>Dashboard</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <Text>Main content here</Text>
+  </CardContent>
+</Card>
+```
+
+### Layout Patterns
+
+```jsx
+import { Container, Stack, Group, Grid } from '@ui8kit/core';
+
+// Responsive layout
+<Container size="lg" centered>
+  <Stack gap="lg">
+    <Group justify="between">
+      <Title>Page Title</Title>
+      <Button>Action</Button>
+    </Group>
+    <Grid cols="1-2-3" gap="md">
+      <Card>Item 1</Card>
+      <Card>Item 2</Card>
+      <Card>Item 3</Card>
+    </Grid>
+  </Stack>
+</Container>
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+<Card title="Core Components" icon="cubes" href="/api-reference/core-ui">
+Learn about the base primitives that power UI components
+</Card>
+
+<Card title="Layout Components" icon="layout" href="/api-reference/layouts">
+Build responsive page layouts with layout components
+</Card>
+</CardGroup>
+
+<Tip>
+UI components eliminate manual Tailwind classes through typed variant props. Start with `Badge`, `Button`, and `Card` for common use cases.
+</Tip>
