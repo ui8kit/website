@@ -10,97 +10,150 @@
   "fonts": {
     "family": "Nunito Sans"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/assets/favicon.svg",
   "navigation": {
-    "tabs": [
-      {
-        "tab": "Guides",
-        "groups": [
-          {
-            "group": "Getting started",
-            "pages": [
-              "index",
-              "quickstart",
-              "development"
-            ]
-          },
-          {
-            "group": "Customization",
-            "pages": [
-              "essentials/settings",
-              "essentials/navigation"
-            ]
-          },
-          {
-            "group": "Writing content",
-            "pages": [
-              "essentials/markdown",
-              "essentials/code",
-              "essentials/images",
-              "essentials/reusable-snippets"
-            ]
-          },
-          {
-            "group": "AI tools",
-            "pages": [
-              "ai-tools/cursor",
-              "ai-tools/claude-code",
-              "ai-tools/windsurf"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "API reference",
-        "groups": [
-          {
-            "group": "API documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
-          },
-          {
-            "group": "Endpoint examples",
-            "pages": [
-              "api-reference/endpoint/get",
-              "api-reference/endpoint/create",
-              "api-reference/endpoint/delete",
-              "api-reference/endpoint/webhook"
-            ]
-          }
-        ]
-      }
-    ],
     "global": {
       "anchors": [
         {
           "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "href": "https://ui8kit.buildy.tw",
+          "icon": "book"
         },
         {
           "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "href": "https://ui.buildy.tw",
           "icon": "newspaper"
         }
       ]
-    }
+    },
+    "languages": [
+      {
+        "language": "en",
+        "dropdowns": [
+          {
+            "dropdown": "Documentation",
+            "icon": "book",
+            "description": "How to use UI8Kit and build with best practices",
+            "pages": [
+              {
+                "group": "Getting started",
+                "icon": "rocket",
+                "pages": [
+                  "en/overview",
+                  "en/getting-started",
+                  "en/development-guide/basic-workflow",
+                  "en/development-guide/advanced-workflow",
+                  "en/development-guide/development-guide",
+                  "en/troubleshooting"
+                ]
+              },
+              {
+                "group": "Architecture",
+                "icon": "layers",
+                "pages": [
+                  "en/architecture/architecture",
+                  "en/architecture/package-structure",
+                  "en/architecture/build-system",
+                  "en/architecture/typescript-configuration"
+                ]
+              },
+              {
+                "group": "Components",
+                "icon": "puzzle",
+                "pages": [
+                  "en/architecture/core-components",
+                  "en/api-reference/core-components",
+                  "en/architecture/ui-components",
+                  "en/api-reference/ui-components",
+                  "en/api-reference/layout-components",
+                  "en/architecture/layouts",
+                  "en/architecture/component-registry",
+                  "en/architecture/variant-system",
+                  "en/development-guide/dark-mode"
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "API reference",
+            "icon": "book-open",
+            "description": "Endpoints and usage reference",
+            "pages": ["en/api-reference/api-reference"]
+          }
+        ]
+      },
+      {
+        "language": "ru",
+        "dropdowns": [
+          {
+            "dropdown": "Документация",
+            "icon": "book",
+            "description": "Как использовать UI8Kit и лучшие практики",
+            "pages": [
+              {
+                "group": "Начало работы",
+                "icon": "rocket",
+                "pages": [
+                  "ru/обзор",
+                  "ru/начало-работы",
+                  "ru/development-guide/базовый-рабочий-процесс",
+                  "ru/development-guide/продвинутый-рабочий-процесс",
+                  "ru/development-guide/руководство-разработчика",
+                  "ru/решение-проблем"
+                ]
+              },
+              {
+                "group": "Архитектура",
+                "icon": "layers",
+                "pages": [
+                  "ru/architecture/архитектура",
+                  "ru/architecture/структура-пакета",
+                  "ru/architecture/система-сборки",
+                  "ru/architecture/конфигурация-typescript"
+                ]
+              },
+              {
+                "group": "Компоненты",
+                "icon": "puzzle",
+                "pages": [
+                  "ru/architecture/базовые-компоненты",
+                  "ru/api-reference/базовые-компоненты",
+                  "ru/architecture/ui-компоненты",
+                  "ru/api-reference/ui-компоненты",
+                  "ru/api-reference/компоненты-макетов",
+                  "ru/architecture/макеты",
+                  "ru/architecture/реестр-компонентов",
+                  "ru/architecture/система-вариантов",
+                  "ru/development-guide/темная-тема"
+                ]
+              }
+            ]
+          },
+          {
+            "dropdown": "API справочник",
+            "icon": "book-open",
+            "description": "Эндпоинты и примеры использования",
+            "pages": ["ru/api-reference/справочник-api"]
+          }
+        ]
+      }
+    ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/assets/logo/light.svg",
+    "dark": "/assets/logo/dark.svg"
   },
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "label": "Docs",
+        "href": "https://ui8kit.buildy.tw"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
+      "label": "UI8Kit",
+      "href": "https://ui.buildy.tw"
     }
   },
   "contextual": {
@@ -117,9 +170,9 @@
   },
   "footer": {
     "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "x": "#",
+      "github": "https://github.com/ui8kit",
+      "linkedin": "#"
     }
   }
 }

@@ -3,6 +3,10 @@ dist
 build
 .turbo/
 .manual/
+.project/
+.cursor/
+.prompt/
+.cursorignore
 bun.lock
 package-lock.json
 .env
