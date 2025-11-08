@@ -47,7 +47,7 @@
                 "group": "Architecture",
                 "icon": "house-heart",
                 "pages": [
-                  "en/architecture/architecture",
+                  "en/architecture/overview",
                   "en/architecture/package-structure",
                   "en/architecture/build-system",
                   "en/architecture/typescript-configuration"
@@ -68,13 +68,14 @@
                 "group": "Development Guide",
                 "icon": "wrench",
                 "pages": [
-                  "en/development-guide/basic-network-wired",
-                  "en/development-guide/advanced-network-wired",
-                  "en/development-guide/development-guide",
+                  "en/development-guide/overview",
+                  "en/development-guide/basic-workflow",
+                  "en/development-guide/advanced-workflow",
                   "en/development-guide/dark-mode",
-                  "en/troubleshooting"
+                  "en/development-guide/best-practices"
                 ]
-              }
+              },
+              "en/troubleshooting"
             ]
           },
           {
@@ -86,7 +87,7 @@
                 "group": "API Reference",
                 "icon": "wrench",
                 "pages": [
-                  "en/api-reference/api-reference"
+                  "en/api-reference/overview"
                 ]
               },
               {
@@ -118,44 +119,51 @@
         "language": "ru",
         "tabs": [
           {
-            "tab": "Документация",
+            "tab": "Documentation",
             "icon": "book",
-            "description": "Как использовать UI8Kit и лучшие практики",
+            "description": "How to use UI8Kit and build with best practices",
             "pages": [
               {
-                "group": "Начало работы",
+                "group": "Getting started",
                 "icon": "house",
                 "pages": [
-                  "ru/обзор",
-                  "ru/начало-работы",
-                  "ru/development-guide/базовый-рабочий-процесс",
-                  "ru/development-guide/продвинутый-рабочий-процесс",
-                  "ru/development-guide/руководство-разработчика",
-                  "ru/development-guide/темная-тема",
-                  "ru/решение-проблем"
+                  "ru/overview",
+                  "ru/getting-started"
                 ]
               },
               {
-                "group": "Архитектура",
+                "group": "Architecture",
                 "icon": "house-heart",
                 "pages": [
-                  "ru/architecture/архитектура",
-                  "ru/architecture/структура-пакета",
-                  "ru/architecture/система-сборки",
-                  "ru/architecture/конфигурация-typescript"
+                  "ru/architecture/overview",
+                  "ru/architecture/package-structure",
+                  "ru/architecture/build-system",
+                  "ru/architecture/typescript-configuration"
                 ]
               },
               {
-                "group": "Компоненты",
+                "group": "Components",
                 "icon": "boxes",
                 "pages": [
-                  "ru/architecture/базовые-компоненты",
-                  "ru/architecture/ui-компоненты",
-                  "ru/architecture/макеты",
-                  "ru/architecture/реестр-компонентов",
-                  "ru/architecture/система-вариантов"
+                  "ru/architecture/core-components",
+                  "ru/architecture/ui-components",
+                  "ru/architecture/layouts",
+                  "ru/architecture/component-registry",
+                  "ru/architecture/variant-system"
                 ]
-              }
+              },
+              {
+                "group": "Development Guide",
+                "icon": "wrench",
+                "pages": [
+                  "ru/development-guide/overview",
+                  "ru/development-guide/basic-workflow",
+                  "ru/development-guide/advanced-workflow",
+                  "ru/development-guide/dark-mode",
+                  "ru/development-guide/best-practices"
+                ]
+              },
+              "ru/troubleshooting"
             ]
           },
           {
@@ -167,28 +175,28 @@
                 "group": "API Reference",
                 "icon": "wrench",
                 "pages": [
-                  "ru/api-reference/api-reference"
+                  "ru/api-reference/overview"
                 ]
               },
               {
                 "group": "Core Components",
                 "icon": "box",
                 "pages": [
-                  "ru/api-reference/core-components"
+                  "ru/api-reference/core-ui"
                 ]
               },
               {
                 "group": "UI Components",
                 "icon": "boxes",
                 "pages": [
-                  "ru/api-reference/ui-components"
+                  "ru/api-reference/components"
                 ]
               },
               {
                 "group": "Layout Components",
                 "icon": "pen-line",
                 "pages": [
-                  "ru/api-reference/layout-components"
+                  "ru/api-reference/layouts"
                 ]
               }
             ]
