@@ -1,5 +1,5 @@
 ---
-title: 'Обзор'
+title: 'Обзор UI8Kit'
 description: 'Введение в UI8Kit Core - минималистичную библиотеку React UI-компонентов, построенную на Tailwind CSS с семантическим HTML5'
 ---
 
