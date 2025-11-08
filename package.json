@@ -23,6 +23,7 @@
     "preview:web": "bunx turbo run preview --filter=./apps/web",
     "docs:watch": "node scripts/sync-docs-watcher.js",
     "docs:commit-ru": "node scripts/commit-docs-ru.js",
+    "docs:full-llm": "node scripts/generate-llm-context.js",
     "changeset": "changeset",
     "changeset:add": "changeset add",
     "changeset:version": "changeset version",

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// bun run scripts/generate-llm-context.js
 
 /**
  * Script to generate llms-full.txt
@@ -10,8 +11,8 @@ const fs = require('fs');
 const path = require('path');
 
 // Configuration
-const DOCS_DIR = path.join(__dirname, 'apps/docs/en');
-const OUTPUT_FILE = path.join(__dirname, 'llms-full.txt');
+const DOCS_DIR = path.join(__dirname, '../apps/docs/en');
+const OUTPUT_FILE = path.join(__dirname, '../apps/docs/llms-full.txt');
 const EXCLUDE_DIRS = ['.git', 'node_modules'];
 
 /**
